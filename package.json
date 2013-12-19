@@ -1,0 +1,25 @@
+{
+  "name": "fs-session",
+  "version": "0.0.1",
+  "description": "A Nodejs module to store session data to disk.",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"no tests found, sad face\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xzela/fs-session"
+  },
+  "keywords": [
+    "fs",
+    "session",
+    "storage"
+  ],
+  "author": "Zeph LaFassett",
+  "license": "Apache License v2",
+  "bugs": {
+    "url": "https://github.com/xzela/fs-session/issues"
+  },
+  "homepage": "https://github.com/xzela/fs-session"
+}
