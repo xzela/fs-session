@@ -1,4 +1,4 @@
 fs-session
 ==========
 
-A Nodejs module to store session data to disk. 
+A Nodejs module to store connect session data to disk.
