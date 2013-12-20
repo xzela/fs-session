@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "test": "echo \"no tests found, sad face\""
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
