@@ -23,8 +23,7 @@
   },
   "homepage": "https://github.com/xzela/fs-session",
   "dependencies": {
-    "connect": "2.*",
-    "nodeunit": "*"
+    "connect": "2.*"
   },
   "devDependencies": {
     "nodeunit": "*"
