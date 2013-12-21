@@ -1,6 +1,5 @@
 
 var connect = require('connect'),
-	assert = require('assert')
 	FsSession = require('./lib/fs-session')(connect);
 
 var store = new FsSession;
@@ -8,7 +7,7 @@ var _sses;
 
 exports.groupOne = {
 	setUp: function (callback) {
-		this._sid = 'sid';
+		this._sid = 'sessionId1',
 		this._cookie = {
 			cookie: {
 				maxAge: 60
@@ -52,7 +51,7 @@ exports.groupOne = {
 
 exports.groupTwo = {
 	setUp: function(callback) {
-		this._sid = 'sid2';
+		this._sid = 'sessionId2',
 		this._cookie = {
 			cookie: {
 				maxAge: 10
@@ -81,6 +80,16 @@ exports.groupTwo = {
 				test.equal(expired, true, "#expired() session should be expired");
 				test.done();
 			});
-		}, 1000);
+		}, 500);
+	}
+};
+
+exports.groupThree = {
+	clear: function(test) {
+		test.expect(1);
+		store.clear(function(err) {
+			test.ok(!err, '#clear() an error was thrown!');
+			test.done();
+		});
 	}
 };
