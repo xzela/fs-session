@@ -3,62 +3,84 @@ var connect = require('connect'),
 	assert = require('assert')
 	FsSession = require('./lib/fs-session')(connect);
 
-var store = new FsSession,
-	session_id = 'session_id',
-	session_id2 = 'session_id2',
-	cookie = {cookie: {
-		maxAge: 60
-	}};
+var store = new FsSession;
+var _sses;
 
-exports.sessionTestOne = function(test) {
-	store.set(session_id, cookie, function(err, data) {
-		var sess = data;
-		// console.log('verifying setting session: ' + session_id);
-		test.ok(!err, '#set() session failed to serialize');
-		store.expired(session_id, function(err, expired) {
-			test.equal(expired, false, "#expired session should not be expired already expired");
-		});
-		store.get(session_id, function(err, data) {
-			test.equal(sess.ttl, data.ttl, "#get session ttl should be the same!");
-			test.equal(sess.cookie.maxAge, data.cookie.maxAge, "#get session cookie.maxAge should be the same!");
-		});
-		store.destroy(session_id, function(err, callback) {
-			console.log('verifying destroying session: ' + session_id);
-			assert(!err, '#destroy failed to destroy session');
+exports.groupOne = {
+	setUp: function (callback) {
+		this._sid = 'sid';
+		this._cookie = {
+			cookie: {
+				maxAge: 60
+			}
+		};
+		callback();
+	},
+	setSession: function(test) {
+		test.expect(1);
+		store.set(this._sid, this._cookie, function(err, data) {
+			test.ok(!err, '#setSession: Session failed to serialize to disk because: ');
+			this._sess = data;
 			test.done();
 		});
-	});
 
+	},
+	expireSession: function(test) {
+		test.expect(1);
+		store.expired(this._sid, function(err, expired) {
+			test.equal(expired, false, "#expireSession: Session should not be already expired");
+			test.done();
+		});
+	},
+	getSession: function(test) {
+		test.expect(3);
+		store.get(this._sid, function(err, data) {
+			test.ok(!err, "#getSession: Failed to get session");
+			test.equal(this._sess.ttl, data.ttl, "#getSession: Session ttl should be the same!");
+			test.equal(this._sess.maxAge, data.maxAge, "#getSession: Session maxAge should be the same!");
+			test.done();
+		});
+	},
+	destroySession: function(test) {
+		test.expect(1);
+		store.destroy(this._sid, function(err, callback) {
+			test.ok(!err, '#destroy failed to destroy session');
+			test.done();
+		});
+	}
 };
 
-exports.sessionTestTwo = function(test) {
-	store.set(session_id2, {cookie: {maxAge:10}}, function(err, data) {
+exports.groupTwo = {
+	setUp: function(callback) {
+		this._sid = 'sid2';
+		this._cookie = {
+			cookie: {
+				maxAge: 10
+			}
+		};
+		callback();
+	},
+	setSession: function(test) {
+		test.expect(1);
+		store.set(this._sid, this._cookie, function(err, data) {
+			test.ok(!err, '#setSession: Session failed to serialize to disk because: ');
+			_sess = data;
+			test.done();
+		});
+	},
+	getSession: function(test) {
+		test.expect(1);
+		test.ok(this._sid);
+		test.done();
+	},
+	expireSession: function(test) {
+		var self = this;
+		test.expect(1);
 		setTimeout(function() {
-			store.expired(session_id2, function(err, expired) {
-				test.equal(expired, true, "#expired() session should be expiored");
+			store.expired(self._sid, function(err, expired) {
+				test.equal(expired, true, "#expired() session should be expired");
 				test.done();
 			});
-		}, 5000);
-	});
+		}, 1000);
+	}
 };
-// store.set('someSessionId', { cookie: {maxAge: 60}}, function(err, file) {
-// 	if (err) {
-// 		throw err;
-// 	} else {
-// 		console.log(file);
-// 	}
-
-// });
-// store.get('someSessionId', function(err, file) {
-// 	if (err) {
-// 		throw err;
-// 	} else {
-// 		console.log(file);
-// 	}
-// });
-// console.log(store);
-// store.destroy('someSessionId', function(err) {
-// 	console.log(err);
-// });
-// store.purge();
-
