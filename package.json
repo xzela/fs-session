@@ -1,9 +1,9 @@
 {
   "name": "fs-session",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "A Nodejs module to store connect session data to disk.",
   "main": "index.js",
-  "private": true,
+  "private": false,
   "scripts": {
     "test": "nodeunit test.js"
   },
@@ -22,11 +22,11 @@
     "url": "https://github.com/xzela/fs-session/issues"
   },
   "homepage": "https://github.com/xzela/fs-session",
-  "dependences": {
+  "dependencies": {
     "connect": "2.*",
     "nodeunit": "*"
   },
-  "devDependences": {
+  "devDependencies": {
     "nodeunit": "*"
   }
 }
