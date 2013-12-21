@@ -48,7 +48,7 @@ $ nodeunit test.js
 ```
 
 
-## Feeback
+## Feedback
 ---
 * Found a bug? 
 * Want to improve it? 
