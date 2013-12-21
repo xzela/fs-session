@@ -17,7 +17,7 @@
     "storage"
   ],
   "author": "Zeph LaFassett",
-  "license": "Apache License v2",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/xzela/fs-session/issues"
   },
